@@ -25,7 +25,7 @@
                     <li>
                         <a href="/seller">Profile</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Products</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <li>
@@ -55,7 +55,7 @@
 
                         </ul>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Sells</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
                             <li>
@@ -96,7 +96,7 @@
         <div id="content" class="p-4 p-md-5">
             <div align="center">
                 <span align="center">
-                    <h3>All Products</h3>
+                    <h3>All Products Review</h3>
                 </span>
                 <table border="1px" width="80%">
                     <tr>
@@ -122,7 +122,6 @@
                                 <a href="/seller/detailProduct/<%= productList[i].product_id %>">
                                     <%= productList[i].product_id %>
                                 </a>
-
                             </td>
                             <td>
                                 <%= productList[i].product_name %>
@@ -140,7 +139,7 @@
                                 <%= productList[i].average_rating %>
                             </td>
                             <td>
-                                <textarea name="" id="" cols="20" rows="2"><%= productList[i].description %></textarea>
+                                <%= productList[i].description %>
                             </td>
                             <td>
                                 <%= productList[i].published %>
@@ -150,7 +149,7 @@
                             </td>
                             <td>
 
-                                <a href="/seller/editProduct/delete/<%= productList[i].product_id %>">Delete</a>
+                                <a href="/seller/reviewProduct/review/<%= productList[i].product_id %>">Review</a>
                             </td>
                         </tr>
                         <% } %>

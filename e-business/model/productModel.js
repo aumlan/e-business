@@ -7,9 +7,10 @@ module.exports = {
             callback(result);
         });
     },
-    getAll: function(callback) {
-        var sql = "select * from product";
-        db.getResult(sql, [], function(results) {
+
+    getAll: function(seller_id, callback) {
+        var sql = "select * from product where seller_id = ?";
+        db.getResult(sql, [seller_id], function(results) {
             callback(results);
         });
     },
@@ -34,7 +35,7 @@ module.exports = {
     insert2: function(product, callback) {
         var sql = "insert into product values (Null,?, ?,?, ?,Null, ?,?, ?,?,?  )";
         db.execute(sql, [ //product.product_id,
-            product.user_id,
+            product.seller_id,
             product.product_name,
             product.quantity,
             product.price,
@@ -69,6 +70,75 @@ module.exports = {
             callback(status);
         });
     },
+    getAllReview: function(product, callback) {
+        var sql = "select * from review where product_id = ?";
+        db.getResult(sql, [product], function(results) {
+            callback(results);
+        });
+    },
+    getAllsellerReview: function(user_id, callback) {
+        var sql = "select * from review where user_id = ?";
+        db.getResult(sql, [user_id], function(results) {
+            callback(results);
+        });
+    },
+
+    getAllUnpublished: function(seller_id, callback) {
+        var sql = "select * from product where seller_id = ? and published = '0' ";
+        db.getResult(sql, [seller_id], function(results) {
+            callback(results);
+        });
+    },
+    updatePublish: function(product_id, callback) {
+        var sql = "update product set published = true where product_id = ?";
+        db.execute(sql, [product_id], function(status) {
+            callback(status);
+        });
+    },
+
+    getAllpublished: function(seller_id, callback) {
+        var sql = "select * from product where seller_id = ? and published = '1' ";
+        db.getResult(sql, [seller_id], function(results) {
+            callback(results);
+        });
+    },
+    updateunpublish: function(product_id, callback) {
+        var sql = "update product set published = false where product_id = ?";
+        db.execute(sql, [product_id], function(status) {
+            callback(status);
+        });
+    },
+    getAllPendingOrders: function(seller_id, callback) {
+        var sql = "select * from orderlist where user_id = ? and order_status = 'pending'";
+        db.getResult(sql, [seller_id], function(results) {
+            callback(results);
+        });
+    },
+    getAllDeliverdOrders: function(seller_id, callback) {
+        var sql = "select * from orderlist where user_id = ? and order_status = 'deliverd'";
+        db.getResult(sql, [seller_id], function(results) {
+            callback(results);
+        });
+    },
+    getOrder: function(order_id, callback) {
+        var sql = "select * from orderlist where order_id = ?";
+        db.getResult(sql, [order_id], function(result) {
+            callback(result);
+        });
+    },
+    updatePendingOrders: function(order_id, callback) {
+        var sql = "update orderlist set order_status = 'deliverd' where order_id = ?";
+        db.execute(sql, [order_id], function(status) {
+            callback(status);
+        });
+    },
+    cancelOrders: function(order_id, callback) {
+        var sql = "update orderlist set order_status = 'cancel' where order_id = ?";
+        db.execute(sql, [order_id], function(status) {
+            callback(status);
+        });
+    },
+
 
 
 }

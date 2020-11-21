@@ -8,7 +8,6 @@ var cookieParser = require('cookie-parser');
 var login = require('./controllers/login');
 
 
-
 var seller = require('./controllers/seller');
 
 var app = express();
@@ -21,15 +20,15 @@ app.set('view engine', 'ejs');
 //middleware
 /*---------------------------------------*/
 
-
+app.use('/signup', signup);
 app.use('/login', login);
-
-
+app.use('/admin', admin);
+app.use('/member', member);
 app.use('/seller', seller);
 
 
 app.use('/', express.static('asset'));
-/*app.use('/pictures', express.static('images'));*/
+app.use('/pictures', express.static('images'));
 
 
 //router

@@ -43,7 +43,17 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">Published Product</a>
+                        <a href="#noSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Publish Product</a>
+                        <ul class="collapse list-unstyled" id="noSubmenu">
+                            <li>
+                                <a href="/seller/publishedProduct">Published Product</a>
+                            </li>
+                            <li>
+                                <a href="/seller/unpublishedProduct">Unpublished Product</a>
+                            </li>
+
+
+                        </ul>
                     </li>
                     <li>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Sells</a>
@@ -85,86 +95,66 @@
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
             <div align="center">
-                <form method="POST" enctype="multipart/form-data">
-                    <span align="center">
-                        <h3>Edit Product</h3>
-                    </span>
-                    <table width="50%" align="center" style="border-collapse: separate;border-spacing: 0 8px">
+                <span align="center">
+                    <h3>All Products Edit</h3>
+                </span>
+                <table border="1px" width="80%">
+                    <tr>
+                        <th width="10%">Image</th>
+                        <th width="30%">product ID</th>
+                        <th width="30%">Name</th>
+                        <th width="30%">Quantity</th>
+                        <th width="20%">price</th>
+                        <th width="20%">Catagory</th>
+                        <th width="30%">Rating</th>
+                        <th width="30%">Description</th>
+                        <th width="30%">Published</th>
+                        <th width="30%">exclusive</th>
+                        <th width="20%">Action</th>
+                    </tr>
+
+                    <% for(var i=0; i < productList.length; i++){ %>
                         <tr>
-                            <td width="45%">Product Name</td>
-                            <td width="10%">:</td>
-                            <td width="45%">
-                                <input type="text" name="name" value="<%=product_name%>">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="45%">Quntity</td>
-                            <td width="10%">:</td>
-                            <td width="45%">
-                                <input type="number" name="quantity" value="<%=quantity%>">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="45%">Product price</td>
-                            <td width="10%">:</td>
-                            <td width="45%">
-                                <input type="number" name="price" value="<%=price%>">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="45%">Catagory</td>
-                            <td width="10%">:</td>
-                            <td width="45%">
-                                <select name="catagory" id="catagory">
-                                    <option value="men">Men</option>
-                                    <option value="women">Women</option>
-                                    <option value="child">Child</option>
-                                    
-                                  </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Description</td>
-                            <td>:</td>
                             <td>
-                                <input type="text" name="description" placeholder="Description" value="<%=description%>">
+                                <img align="center" src="<%= productList[i].R_IMAGE %>" alt="logo" height="100px" width="100px" />
                             </td>
-                        </tr>
-                        <tr>
-                            <td>Exclusive</td>
-                            <td>:</td>
                             <td>
-                                <select name="exclusive" id="exclusive">
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                    
-                                  </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Image</td>
-                            <td>:</td>
-                            <td>
-                                <input type="file" name="imageFile" accept="image/*" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="45%">.</td>
-                            <td width="10%"></td>
-                            <td width="55%">
-                                <span><h5>Are you sure??</h5></span>
+                                <a href="/seller/detailProduct/<%= productList[i].product_id %>">
+                                    <%= productList[i].product_id %>
+                                </a>
 
                             </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
                             <td>
-                                <input type="submit" name="edit" value="Edit" />
+                                <%= productList[i].product_name %>
+                            </td>
+                            <td>
+                                <%= productList[i].quantity %>
+                            </td>
+                            <td>
+                                <%= productList[i].price %>
+                            </td>
+                            <td>
+                                <%= productList[i].catatgoryID %>
+                            </td>
+                            <td>
+                                <%= productList[i].average_rating %>
+                            </td>
+                            <td>
+                                <textarea name="" id="" cols="20" rows="2"><%= productList[i].description %></textarea>
+                            </td>
+                            <td>
+                                <%= productList[i].published %>
+                            </td>
+                            <td>
+                                <%= productList[i].exclusive %>
+                            </td>
+                            <td>
+
+                                <a href="/seller/editProduct/edit/<%= productList[i].product_id %>">Edit</a>
                             </td>
                         </tr>
-                    </table>
-                </form>
+                        <% } %>
+                </table>
             </div>
         </div>
 

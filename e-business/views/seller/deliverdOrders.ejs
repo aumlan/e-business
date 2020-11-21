@@ -96,27 +96,25 @@
         <div id="content" class="p-4 p-md-5">
             <div align="center">
                 <span align="center">
-                    <h3>All Products</h3>
+                    <h3>All Orders Pending</h3>
                 </span>
                 <table border="1px" width="80%">
                     <tr>
-                        <th width="10%">Image</th>
-                        <th width="30%">product ID</th>
-                        <th width="30%">Name</th>
-                        <th width="30%">Quantity</th>
-                        <th width="20%">price</th>
-                        <th width="20%">Catagory</th>
-                        <th width="30%">Rating</th>
-                        <th width="30%">Description</th>
-                        <th width="30%">Published</th>
-                        <th width="30%">exclusive</th>
-                        <th width="20%">Action</th>
+                        <th width="10%">Order Id</th>
+                        <th width="10%">Product ID</th>
+                        <th width="10%">Customer Id</th>
+                        <th width="10%">Quantity</th>
+                        <th width="20%">Status</th>
+                        <th width="10%">Paid</th>
+                        <th width="15%">Order Date</th>
+                        <th width="10%">Seller Revenue</th>
+
                     </tr>
 
                     <% for(var i=0; i < productList.length; i++){ %>
                         <tr>
                             <td>
-                                <img align="center" src="<%= productList[i].R_IMAGE %>" alt="logo" height="100px" width="100px" />
+                                <%= productList[i].order_id %>
                             </td>
                             <td>
                                 <a href="/seller/detailProduct/<%= productList[i].product_id %>">
@@ -125,33 +123,24 @@
 
                             </td>
                             <td>
-                                <%= productList[i].product_name %>
+                                <%= productList[i].customer_id %>
                             </td>
                             <td>
                                 <%= productList[i].quantity %>
                             </td>
                             <td>
-                                <%= productList[i].price %>
+                                <%= productList[i].order_status %>
                             </td>
                             <td>
-                                <%= productList[i].catatgoryID %>
+                                <%= productList[i].paid %>
                             </td>
                             <td>
-                                <%= productList[i].average_rating %>
+                                <%= productList[i].date %>
                             </td>
                             <td>
-                                <textarea name="" id="" cols="20" rows="2"><%= productList[i].description %></textarea>
+                                <%= productList[i].seller_revenue %>
                             </td>
-                            <td>
-                                <%= productList[i].published %>
-                            </td>
-                            <td>
-                                <%= productList[i].exclusive %>
-                            </td>
-                            <td>
 
-                                <a href="/seller/editProduct/delete/<%= productList[i].product_id %>">Delete</a>
-                            </td>
                         </tr>
                         <% } %>
                 </table>

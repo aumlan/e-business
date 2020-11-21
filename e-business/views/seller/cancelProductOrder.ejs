@@ -95,66 +95,54 @@
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
             <div align="center">
-                <span align="center">
-                    <h3>All Products</h3>
-                </span>
-                <table border="1px" width="80%">
-                    <tr>
-                        <th width="10%">Image</th>
-                        <th width="30%">product ID</th>
-                        <th width="30%">Name</th>
-                        <th width="30%">Quantity</th>
-                        <th width="20%">price</th>
-                        <th width="20%">Catagory</th>
-                        <th width="30%">Rating</th>
-                        <th width="30%">Description</th>
-                        <th width="30%">Published</th>
-                        <th width="30%">exclusive</th>
-                        <th width="20%">Action</th>
-                    </tr>
-
-                    <% for(var i=0; i < productList.length; i++){ %>
+                <form method="POST" enctype="multipart/form-data">
+                    <span align="center">
+                        <h3>Cancel Product Order</h3>
+                    </span>
+                    <table width="50%" align="center" style="border-collapse: separate;border-spacing: 0 8px">
                         <tr>
-                            <td>
-                                <img align="center" src="<%= productList[i].R_IMAGE %>" alt="logo" height="100px" width="100px" />
-                            </td>
-                            <td>
-                                <a href="/seller/detailProduct/<%= productList[i].product_id %>">
-                                    <%= productList[i].product_id %>
-                                </a>
+                            <td width="45%">Product ID</td>
+                            <td width="10%">:</td>
+                            <td width="45%">
+                                <span><%=product_id%></span>
 
-                            </td>
-                            <td>
-                                <%= productList[i].product_name %>
-                            </td>
-                            <td>
-                                <%= productList[i].quantity %>
-                            </td>
-                            <td>
-                                <%= productList[i].price %>
-                            </td>
-                            <td>
-                                <%= productList[i].catatgoryID %>
-                            </td>
-                            <td>
-                                <%= productList[i].average_rating %>
-                            </td>
-                            <td>
-                                <textarea name="" id="" cols="20" rows="2"><%= productList[i].description %></textarea>
-                            </td>
-                            <td>
-                                <%= productList[i].published %>
-                            </td>
-                            <td>
-                                <%= productList[i].exclusive %>
-                            </td>
-                            <td>
-
-                                <a href="/seller/editProduct/delete/<%= productList[i].product_id %>">Delete</a>
                             </td>
                         </tr>
-                        <% } %>
-                </table>
+                        <tr>
+                            <td width="45%">Order ID</td>
+                            <td width="10%">:</td>
+                            <td width="45%">
+                                <span><%=order_id%></span>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="45%">Quntity</td>
+                            <td width="10%">:</td>
+                            <td width="45%">
+                                <span><%=quantity%></span>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="45%">.</td>
+                            <td width="10%"></td>
+                            <td width="55%">
+                                <span><h5>You want to Cancel the Order??</h5></span>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input type="submit" name="add" value="Yes" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
             </div>
         </div>
 

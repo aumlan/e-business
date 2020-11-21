@@ -96,7 +96,7 @@
         <div id="content" class="p-4 p-md-5">
             <div align="center">
                 <span align="center">
-                    <h3>All Products</h3>
+                    <h3>All Products Edit</h3>
                 </span>
                 <table border="1px" width="80%">
                     <tr>
@@ -122,7 +122,6 @@
                                 <a href="/seller/detailProduct/<%= productList[i].product_id %>">
                                     <%= productList[i].product_id %>
                                 </a>
-
                             </td>
                             <td>
                                 <%= productList[i].product_name %>
@@ -150,7 +149,7 @@
                             </td>
                             <td>
 
-                                <a href="/seller/editProduct/delete/<%= productList[i].product_id %>">Delete</a>
+                                <a href="/seller/unpublishedProduct/publish/<%= productList[i].product_id %>">publish</a>
                             </td>
                         </tr>
                         <% } %>

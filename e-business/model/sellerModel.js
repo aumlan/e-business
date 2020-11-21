@@ -8,6 +8,12 @@ module.exports = {
             callback(result);
         });
     },
+    getUser: function(user_id, callback) {
+        var sql = "select * from sellerpi where user_id = ?";
+        db.getResult(sql, [user_id], function(result) {
+            callback(result);
+        });
+    },
     getAll: function(callback) {
         var sql = "select * from admins";
         db.getResult(sql, [], function(results) {

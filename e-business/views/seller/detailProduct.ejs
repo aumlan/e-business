@@ -22,10 +22,10 @@
             <div class="p-4 pt-5">
                 <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
                 <ul class="list-unstyled components mb-5">
-                    <li>
+                    <li class="active">
                         <a href="/seller">Profile</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Products</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <li>
@@ -70,6 +70,7 @@
 
                         </ul>
                     </li>
+
                     <li>
                         <a href="#">Orders</a>
                     </li>
@@ -94,66 +95,98 @@
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
-            <div align="center">
-                <span align="center">
-                    <h3>All Products</h3>
-                </span>
-                <table border="1px" width="80%">
+            <ul>
+                <li><a href="/admin">Home</a></li>
+                <li><a href="/logout">Log Out</a></li>
+                <li ">
+                    <div class="dropdown ">
+                        <div class="dropbtn ">Profile</div>
+                        <div class="dropdown-content ">
+                            <a href="/admin/profile ">View Profile</a><br>
+                            <a href="/admin/editProfile ">Edit Profile</a>
+                        </div>
+                    </div>
+                </li>
+                <li ><a href="/admin/restaurants ">All Restaurants</a></li>
+                <li ><a href="/admin/addRestaurant ">Add Restaurant</a></li>
+            </ul>
+            <div align="center " width="80% ">
+                <table align="center " width="50% ">
                     <tr>
-                        <th width="10%">Image</th>
-                        <th width="30%">product ID</th>
-                        <th width="30%">Name</th>
-                        <th width="30%">Quantity</th>
-                        <th width="20%">price</th>
-                        <th width="20%">Catagory</th>
-                        <th width="30%">Rating</th>
-                        <th width="30%">Description</th>
-                        <th width="30%">Published</th>
-                        <th width="30%">exclusive</th>
-                        <th width="20%">Action</th>
+                        <td width="30% ">Seller ID</td>
+                        <td width="10% ">:</td>
+                        <td width="30% ">
+                            <%=seller_id%>
+                        </td>
+                        <td width="30% " rowspan="5 ">
+                            <img align="right " src=" " alt="person " height="200px " width="200px " />
+                        </td>
                     </tr>
+                    <tr>
+                        <td>Product Name</td>
+                        <td>:</td>
+                        <td>
+                            <%=product_name%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Quantity</td>
+                        <td>:</td>
+                        <td>
+                            <%=quantity%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td>:</td>
+                        <td>
+                            <%=price%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Catagory</td>
+                        <td>:</td>
+                        <td>
+                            <%=catagory_id%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Rating</td>
+                        <td>:</td>
+                        <td>
+                            <%=average_rating%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>description</td>
+                        <td>:</td>
+                        <td>
+                            <%=description%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Published</td>
+                        <td>:</td>
+                        <% if(published==0){ %> 
+                            <td><span>Unpublished</span>
+                            </td>
+                            <%} else { %>
+                                <td><span>published</span>
+                                </td>
 
-                    <% for(var i=0; i < productList.length; i++){ %>
-                        <tr>
-                            <td>
-                                <img align="center" src="<%= productList[i].R_IMAGE %>" alt="logo" height="100px" width="100px" />
-                            </td>
-                            <td>
-                                <a href="/seller/detailProduct/<%= productList[i].product_id %>">
-                                    <%= productList[i].product_id %>
-                                </a>
+                                <%} %>
 
-                            </td>
-                            <td>
-                                <%= productList[i].product_name %>
-                            </td>
-                            <td>
-                                <%= productList[i].quantity %>
-                            </td>
-                            <td>
-                                <%= productList[i].price %>
-                            </td>
-                            <td>
-                                <%= productList[i].catatgoryID %>
-                            </td>
-                            <td>
-                                <%= productList[i].average_rating %>
-                            </td>
-                            <td>
-                                <textarea name="" id="" cols="20" rows="2"><%= productList[i].description %></textarea>
-                            </td>
-                            <td>
-                                <%= productList[i].published %>
-                            </td>
-                            <td>
-                                <%= productList[i].exclusive %>
-                            </td>
-                            <td>
 
-                                <a href="/seller/editProduct/delete/<%= productList[i].product_id %>">Delete</a>
-                            </td>
-                        </tr>
-                        <% } %>
+                        
+                    </tr>
+                    <tr>
+                        <td>Exclusive</td>
+                        <td>:</td>
+                        <td>
+                            <%=exclusive%>
+                        </td>
+                    </tr>
+                    
                 </table>
             </div>
         </div>

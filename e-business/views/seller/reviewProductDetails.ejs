@@ -25,7 +25,7 @@
                     <li>
                         <a href="/seller">Profile</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Products</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <li>
@@ -55,7 +55,7 @@
 
                         </ul>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Sells</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
                             <li>
@@ -96,64 +96,40 @@
         <div id="content" class="p-4 p-md-5">
             <div align="center">
                 <span align="center">
-                    <h3>All Products</h3>
+                    <h3>All Products Edit</h3>
                 </span>
                 <table border="1px" width="80%">
                     <tr>
-                        <th width="10%">Image</th>
+
                         <th width="30%">product ID</th>
-                        <th width="30%">Name</th>
-                        <th width="30%">Quantity</th>
-                        <th width="20%">price</th>
-                        <th width="20%">Catagory</th>
+                        <th width="30%">Review Message</th>
                         <th width="30%">Rating</th>
-                        <th width="30%">Description</th>
-                        <th width="30%">Published</th>
-                        <th width="30%">exclusive</th>
-                        <th width="20%">Action</th>
+
                     </tr>
+                    <% var j=0;
+                    if(j > productList.length ){ %>
 
-                    <% for(var i=0; i < productList.length; i++){ %>
-                        <tr>
-                            <td>
-                                <img align="center" src="<%= productList[i].R_IMAGE %>" alt="logo" height="100px" width="100px" />
-                            </td>
-                            <td>
-                                <a href="/seller/detailProduct/<%= productList[i].product_id %>">
-                                    <%= productList[i].product_id %>
-                                </a>
+                        <h2>Not reviewed Yet</h2>
 
-                            </td>
-                            <td>
-                                <%= productList[i].product_name %>
-                            </td>
-                            <td>
-                                <%= productList[i].quantity %>
-                            </td>
-                            <td>
-                                <%= productList[i].price %>
-                            </td>
-                            <td>
-                                <%= productList[i].catatgoryID %>
-                            </td>
-                            <td>
-                                <%= productList[i].average_rating %>
-                            </td>
-                            <td>
-                                <textarea name="" id="" cols="20" rows="2"><%= productList[i].description %></textarea>
-                            </td>
-                            <td>
-                                <%= productList[i].published %>
-                            </td>
-                            <td>
-                                <%= productList[i].exclusive %>
-                            </td>
-                            <td>
+                        <% } else { for(var i=0; i
+                        < productList.length; i++){ %>
+                            <tr>
 
-                                <a href="/seller/editProduct/delete/<%= productList[i].product_id %>">Delete</a>
-                            </td>
-                        </tr>
-                        <% } %>
+                                <td>
+                                    <a href="/seller/detailProduct/<%= productList[i].product_id %>">
+                                        <%= productList[i].product_id %>
+                                    </a>
+                                </td>
+                                <td>
+                                    <%= productList[i].review_msg %>
+                                </td>
+                                <td>
+                                    <%= productList[i].rating %>
+                                </td>
+
+                            </tr>
+                            <% }
+                         } %>
                 </table>
             </div>
         </div>

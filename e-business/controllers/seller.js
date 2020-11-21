@@ -8,11 +8,21 @@ var router = express.Router();
 
 router.get('*', function(req, res, next) {
     if (req.session.uId != null) {
+        sellerModel.getUser(req.session.uId, function(result) {
+            if (result.length > 0) {
+                req.session.uId = result[0].seller_id;
+
+            } else {
+                res.redirect('/login');
+            }
+        });
         next();
     } else {
         res.redirect('/login');
     }
 });
+
+
 
 /*router.get('/', (req, res) => {
     var user = {
@@ -30,14 +40,14 @@ router.get('/', (req, res) => {
 });
 
 
-//add product 
+//*todo: add product 
 router.get('/addProduct', (req, res) => {
     res.render('seller/addProduct');
 });
 
 router.post('/addProduct', (req, res) => {
     var product = {
-        user_id: req.session.uId,
+        seller_id: req.session.uId,
         //product_id: 55,
         product_name: req.body.name,
         quantity: req.body.quantity,
@@ -64,12 +74,14 @@ router.post('/addProduct', (req, res) => {
         }
     });
 });
-//add product endddddddddd
+
+//*todo: add product endddddddddd
 
 
-//delete product
+//*todo: delete product
+
 router.get('/deleteProduct', (req, res) => {
-    productModel.getAll(function(results) {
+    productModel.getAll(req.session.uId, function(results) {
         if (results.length > 0) {
             var product = {
                 productList: results
@@ -97,12 +109,13 @@ router.post('/editProduct/delete/:product_id', (req, res) => {
     });
 });
 
-//delete product endddddddddd
+//*todo: delete product endddddddddd
 
 
-//edit product
+//*todo: edit product
+
 router.get('/editProduct', (req, res) => {
-    productModel.getAll(function(results) {
+    productModel.getAll(req.session.uId, function(results) {
         if (results.length > 0) {
             var product = {
                 productList: results
@@ -143,10 +156,12 @@ router.post('/editProduct/edit/:product_id', (req, res) => {
         }
     });
 });
-//edit product endddddddddd
+
+//*todo: edit product endddddddddd
 
 
-//add coupon 
+//*todo: add coupon
+
 router.get('/addCoupon', (req, res) => {
     res.render('seller/addCoupon');
 });
@@ -173,37 +188,190 @@ router.post('/addCoupon', (req, res) => {
         }
     });
 });
-//add coupon endddddddddd
+
+//*todo: add coupon endddddddddd
 
 
+//*todo: product Review
+
+router.get('/reviewProduct', (req, res) => {
+    productModel.getAll(req.session.uId, function(results) {
+        if (results.length > 0) {
+            var product = {
+                productList: results
+            };
+            res.render('seller/reviewProduct', product);
+        } else {
+
+        }
+    });
+});
+
+router.get('/reviewProduct/review/:product_id', (req, res) => {
+    productModel.getAllReview(req.params.product_id, function(results) {
+        if (results.length > 0) {
+            var product = {
+                productList: results
+            };
+            res.render('seller/reviewProductDetails', product);
+        } else {
+            res.render('seller/reviewProductDetails', product);
+        }
+    });
+});
+
+//*todo: product Review endeeeeeeeee
 
 
+//*todo: publish product
+router.get('/publishedProduct', (req, res) => {
+    productModel.getAllpublished(req.session.uId, function(results) {
+        if (results.length > 0) {
+            var product = {
+                productList: results
+            };
+            res.render('seller/publishedProduct', product);
+        }
+    });
+});
+
+router.get('/publishedProduct/unpublish/:product_id', (req, res) => {
+    productModel.get(req.params.product_id, function(result) {
+        if (result.length > 0) {
+            res.render('seller/unpublish', result[0]);
+        }
+    });
+});
+
+router.post('/publishedProduct/unpublish/:product_id', (req, res) => {
+    productModel.updateunpublish(req.params.product_id, function(success) {
+        if (success) {
+            res.redirect('/seller');
+        } else {
+            res.redirect("/publishedProduct/unpublish/" + req.params.product_id);
+        }
+    });
+});
+
+//*todo: Publish product endddddd
 
 
+//*todo: UNNNpublish product
+
+router.get('/unpublishedProduct', (req, res) => {
+    productModel.getAllUnpublished(req.session.uId, function(results) {
+        if (results.length > 0) {
+            var product = {
+                productList: results
+            };
+            res.render('seller/unpublishedProduct', product);
+        }
+    });
+});
+
+router.get('/unpublishedProduct/publish/:product_id', (req, res) => {
+    productModel.get(req.params.product_id, function(result) {
+        if (result.length > 0) {
+            res.render('seller/publish', result[0]);
+        }
+    });
+});
+
+router.post('/unpublishedProduct/publish/:product_id', (req, res) => {
+    productModel.updatePublish(req.params.product_id, function(success) {
+        if (success) {
+            res.redirect('/seller');
+        } else {
+            res.redirect("/unpublishedProduct/publish/" + req.params.product_id);
+        }
+    });
+});
+
+// *todo: UNNNPublish product enddddddd
 
 
+// *todo: Product Details
+
+router.get('/detailProduct/:product_id', (req, res) => {
+    productModel.get(req.params.product_id, function(result) {
+        if (result.length > 0) {
+            res.render('seller/detailProduct', result[0]);
+        }
+    });
+});
+
+// *todo: Product Details enddddd
 
 
+// *todo: pending orders
+
+router.get('/pendingOrders', (req, res) => {
+    productModel.getAllPendingOrders(req.session.uId, function(results) {
+        if (results.length > 0) {
+            var product = {
+                productList: results
+            };
+            res.render('seller/pendingOrders', product);
+        }
+    });
+});
+
+router.get('/pendingOrders/deliverd/:order_id', (req, res) => {
+    productModel.getOrder(req.params.order_id, function(result) {
+        if (result.length > 0) {
+            res.render('seller/deliverdProduct', result[0]);
+        }
+    });
+});
+
+router.post('/pendingOrders/deliverd/:order_id', (req, res) => {
+    productModel.updatePendingOrders(req.params.order_id, function(success) {
+        if (success) {
+            res.redirect('/seller');
+        } else {
+            res.redirect("/editProduct/delete/" + req.params.product_id);
+        }
+    });
+});
+
+// *todo: pending orders enddddddd
 
 
+// *todo: cancel orders
+
+router.get('/pendingOrders/cancel/:order_id', (req, res) => {
+    productModel.getOrder(req.params.order_id, function(result) {
+        if (result.length > 0) {
+            res.render('seller/cancelProductOrder', result[0]);
+        }
+    });
+});
+
+router.post('/pendingOrders/cancel/:order_id', (req, res) => {
+    productModel.cancelOrders(req.params.order_id, function(success) {
+        if (success) {
+            res.redirect('/seller');
+        } else {
+            res.redirect("/editProduct/delete/" + req.params.product_id);
+        }
+    });
+});
+
+// *todo: pending orders enddddd
 
 
+// *todo: deliverd orders
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+router.get('/deliverdOrders', (req, res) => {
+    productModel.getAllDeliverdOrders(req.session.uId, function(results) {
+        if (results.length > 0) {
+            var product = {
+                productList: results
+            };
+            res.render('seller/deliverdOrders', product);
+        }
+    });
+});
 
 
 
