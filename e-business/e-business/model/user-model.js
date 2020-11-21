@@ -1,0 +1,32 @@
+var db = require('./db');
+
+module.exports = {
+    get: function(userId, callback) {
+        var sql = "select * from users where U_ID = ?";
+
+        db.getResult(sql, [userId], function(result) {
+            callback(result);
+        });
+    },
+    getAll: function(callback) {
+        var sql = "select * from users";
+        db.getResult(sql, [], function(results) {
+            callback(results);
+        });
+    },
+    validate: function(user, callback) {
+        var sql = "select * from user where user_id = ? and password = ?";
+
+        db.getResult(sql, [user.userId, user.password], function(result) {
+            callback(result);
+        });
+    },
+    insert: function(user, callback) {
+        var sql = "insert into users values (?, ?, ?, ?)";
+        db.execute(sql, [user.userId, user.password, user.type, user.status], function(status) {
+            callback(status);
+        });
+    },
+
+
+}
