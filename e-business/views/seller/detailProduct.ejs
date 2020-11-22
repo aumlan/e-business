@@ -40,6 +40,9 @@
                             <li>
                                 <a href="/seller/addCoupon">Add Coupon</a>
                             </li>
+                            <li>
+                                <a href="/seller/addCatagory">Add Catagory</a>
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -62,20 +65,33 @@
                                 <a href="/seller/reviewProduct">Review</a>
                             </li>
                             <li>
-                                <a href="#">Sells Analysis</a>
+                                <a href="/seller/totalIncome">Sells Analysis</a>
                             </li>
                             <li>
-                                <a href="#">Report Customer</a>
+                                <a href="/seller/reportCustomer">Report Customer</a>
                             </li>
 
                         </ul>
                     </li>
 
                     <li>
-                        <a href="#">Orders</a>
+                        <a href="#nooSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Orders</a>
+                        <ul class="collapse list-unstyled" id="nooSubmenu">
+                            <li>
+                                <a href="/seller/pendingOrders">Pending Orders</a>
+                            </li>
+                            <li>
+                                <a href="/seller/deliverdOrders">Deliverd Orders</a>
+                            </li>
+
+
+                        </ul>
                     </li>
                     <li>
                         <a href="#">Payment</a>
+                    </li>
+                    <li>
+                        <a href="/logout">LogOut</a>
                     </li>
                 </ul>
 
@@ -95,28 +111,14 @@
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
-            <ul>
-                <li><a href="/admin">Home</a></li>
-                <li><a href="/logout">Log Out</a></li>
-                <li ">
-                    <div class="dropdown ">
-                        <div class="dropbtn ">Profile</div>
-                        <div class="dropdown-content ">
-                            <a href="/admin/profile ">View Profile</a><br>
-                            <a href="/admin/editProfile ">Edit Profile</a>
-                        </div>
-                    </div>
-                </li>
-                <li ><a href="/admin/restaurants ">All Restaurants</a></li>
-                <li ><a href="/admin/addRestaurant ">Add Restaurant</a></li>
-            </ul>
+
             <div align="center " width="80% ">
                 <table align="center " width="50% ">
                     <tr>
                         <td width="30% ">Seller ID</td>
                         <td width="10% ">:</td>
                         <td width="30% ">
-                            <%=seller_id%>
+                            <%=user_id%>
                         </td>
                         <td width="30% " rowspan="5 ">
                             <img align="right " src=" " alt="person " height="200px " width="200px " />
@@ -167,7 +169,7 @@
                     <tr>
                         <td>Published</td>
                         <td>:</td>
-                        <% if(published==0){ %> 
+                        <% if(published==0){ %>
                             <td><span>Unpublished</span>
                             </td>
                             <%} else { %>
@@ -177,7 +179,7 @@
                                 <%} %>
 
 
-                        
+
                     </tr>
                     <tr>
                         <td>Exclusive</td>
@@ -186,7 +188,7 @@
                             <%=exclusive%>
                         </td>
                     </tr>
-                    
+
                 </table>
             </div>
         </div>

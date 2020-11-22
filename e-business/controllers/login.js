@@ -1,5 +1,6 @@
 var express = require('express');
 var userModel = require.main.require('./model/user-model');
+var sellerModel = require.main.require('./model/sellerModel');
 var router = express.Router();
 
 router.get('/', (req, res) => {
@@ -12,7 +13,7 @@ router.post('/', (req, res) => {
         userId: req.body.uname,
         password: req.body.password
     };
-    userModel.validate(user, function(result) {
+    sellerModel.validate(user, function(result) {
         if (result.length > 0) {
             req.session.uId = req.body.uname;
             /*if (result[0].U_TYPE == "ADMIN" && result[0].U_STATUS == "VALID") {

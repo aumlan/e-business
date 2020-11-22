@@ -101,7 +101,7 @@
                         Copyright &copy;
                         <script>
                             document.write(new Date().getFullYear());
-                        </script> All rights reserved <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Auml@n</a>
+                        </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </p>
                 </div>
@@ -111,43 +111,57 @@
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
+            <div align="center">
+                <span align="center">
+                    <h3>Report Customer</h3>
+                </span>
+                <table border="1px" width="80%">
+                    <tr>
+                        <th width="10%">Order Id</th>
+                        <th width="10%">Product ID</th>
+                        <th width="10%">Customer Id</th>
+                        <th width="10%">Quantity</th>
+                        <th width="20%">Status</th>
+                        <th width="10%">Paid</th>
+                        <th width="15%">Order Date</th>
+                        <th width="10%">Seller Revenue</th>
+                        <th width="40%">Action</th>
+                    </tr>
 
-            <div align="center " width="100% ">
-                <table align="center " width="100% ">
-                    <tr>
-                        <td width="30% " colspan="5 ">
-                            <img align="right " src="<%=profile_pic%>" alt="person " height="200px " width="200px " />
-                        </td>
-                    </tr><br><br>
-                    <tr>
-                        <td width="30% ">User ID</td>
-                        <td width="10% ">:</td>
-                        <td width="30% ">
-                            <%=user_id%>
-                        </td>
+                    <% for(var i=0; i < productList.length; i++){ %>
+                        <tr>
+                            <td>
+                                <%= productList[i].order_id %>
+                            </td>
+                            <td>
+                                <a href="/seller/detailProduct/<%= productList[i].product_id %>">
+                                    <%= productList[i].product_id %>
+                                </a>
 
-                    </tr>
-                    <tr>
-                        <td>Name</td>
-                        <td>:</td>
-                        <td>
-                            <%=name%>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Email</td>
-                        <td>:</td>
-                        <td>
-                            <%=email%>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Address</td>
-                        <td>:</td>
-                        <td>
-                            <%=address%>
-                        </td>
-                    </tr>
+                            </td>
+                            <td>
+                                <%= productList[i].customer_id %>
+                            </td>
+                            <td>
+                                <%= productList[i].quantity %>
+                            </td>
+                            <td>
+                                <%= productList[i].order_status %>
+                            </td>
+                            <td>
+                                <%= productList[i].paid %>
+                            </td>
+                            <td>
+                                <%= productList[i].date %>
+                            </td>
+                            <td>
+                                <%= productList[i].seller_revenue %>
+                            </td>
+                            <td>
+                                <a href="/seller/reportCustomer/report/<%= productList[i].customer_id %>">Report</a>
+                            </td>
+                        </tr>
+                        <% } %>
                 </table>
             </div>
         </div>

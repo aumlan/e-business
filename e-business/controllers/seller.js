@@ -5,6 +5,7 @@ var productModel = require.main.require('./model/productModel');
 var router = express.Router();
 
 
+/*
 
 router.get('*', function(req, res, next) {
     if (req.session.uId != null) {
@@ -20,10 +21,15 @@ router.get('*', function(req, res, next) {
     } else {
         res.redirect('/login');
     }
+});*/
+
+router.get('*', function(req, res, next) {
+    if (req.session.uId != null) {
+        next();
+    } else {
+        res.redirect('/login');
+    }
 });
-
-
-
 /*router.get('/', (req, res) => {
     var user = {
         name: req.session.uId
@@ -42,23 +48,31 @@ router.get('/', (req, res) => {
 
 //*todo: add product 
 router.get('/addProduct', (req, res) => {
-    res.render('seller/addProduct');
+    sellerModel.getCatagory(function(result) {
+        if (result.length > 0) {
+            var product = {
+                productList: result
+            };
+            res.render('seller/addProduct', product);
+        }
+    });
 });
 
 router.post('/addProduct', (req, res) => {
     var product = {
-        seller_id: req.session.uId,
+        user_id: req.session.uId,
         //product_id: 55,
         product_name: req.body.name,
         quantity: req.body.quantity,
         price: req.body.price,
-        image: 'imageee',
-        //catatgoryID: 1,
+        image: "/pictures/" + res.req.file.filename,
+        catatgoryID: req.body.catagory,
         average_rating: 0,
         description: req.body.description,
-        exclusive: false,
+        exclusive: req.body.exclusive,
         published: false
     };
+
 
     productModel.insert2(product, function(success) {
         if (success) {
@@ -69,8 +83,7 @@ router.post('/addProduct', (req, res) => {
             });
 
         } else {
-
-            res.render('/seller/addProduct');
+            res.render('seller/deleteProduct');
         }
     });
 });
@@ -87,7 +100,14 @@ router.get('/deleteProduct', (req, res) => {
                 productList: results
             };
             res.render('seller/productList', product);
+        } else {
+            sellerModel.get(req.session.uId, function(result) {
+                if (result.length > 0) {
+                    res.render('seller/index', result[0]);
+                }
+            });
         }
+
     });
 });
 
@@ -95,6 +115,12 @@ router.get('/editProduct/delete/:product_id', (req, res) => {
     productModel.get(req.params.product_id, function(result) {
         if (result.length > 0) {
             res.render('seller/deleteProduct', result[0]);
+        } else {
+            sellerModel.get(req.session.uId, function(result) {
+                if (result.length > 0) {
+                    res.render('seller/index', result[0]);
+                }
+            });
         }
     });
 });
@@ -102,7 +128,11 @@ router.get('/editProduct/delete/:product_id', (req, res) => {
 router.post('/editProduct/delete/:product_id', (req, res) => {
     productModel.delete(req.params.product_id, function(success) {
         if (success) {
-            res.redirect('/seller');
+            sellerModel.get(req.session.uId, function(result) {
+                if (result.length > 0) {
+                    res.render('seller/index', result[0]);
+                }
+            });
         } else {
             res.redirect("/editProduct/delete/" + req.params.product_id);
         }
@@ -121,6 +151,12 @@ router.get('/editProduct', (req, res) => {
                 productList: results
             };
             res.render('seller/productList2', product);
+        } else {
+            sellerModel.get(req.session.uId, function(result) {
+                if (result.length > 0) {
+                    res.render('seller/index', result[0]);
+                }
+            });
         }
     });
 });
@@ -129,24 +165,37 @@ router.get('/editProduct/edit/:product_id', (req, res) => {
     productModel.get(req.params.product_id, function(result) {
         if (result.length > 0) {
             res.render('seller/editProductDetails', result[0]);
+        } else {
+            sellerModel.get(req.session.uId, function(result) {
+                if (result.length > 0) {
+                    res.render('seller/index', result[0]);
+                }
+            });
         }
     });
 });
 
 router.post('/editProduct/edit/:product_id', (req, res) => {
+    var jj;
+    if (res.req.file.filename == '') {
+        jj = '';
+    } else {
+        jj = "/pictures/" + res.req.file.filename;
+    }
     var product = {
-        //user_id: req.session.uId,
+        user_id: req.session.uId,
         product_id: req.params.product_id,
         product_name: req.body.name,
         quantity: req.body.quantity,
         price: req.body.price,
-        image: 'imageee',
-        //catatgoryID: 1,
+        image: jj,
         average_rating: 0,
         description: req.body.description,
-        exclusive: false,
+        exclusive: true,
         published: false
     };
+    console.log('*********************');
+    console.log(product.exclusive);
     productModel.update(product, function(success) {
         if (success) {
             res.redirect('/seller');
@@ -215,7 +264,16 @@ router.get('/reviewProduct/review/:product_id', (req, res) => {
             };
             res.render('seller/reviewProductDetails', product);
         } else {
-            res.render('seller/reviewProductDetails', product);
+            productModel.getAll(req.session.uId, function(results) {
+                if (results.length > 0) {
+                    var product = {
+                        productList: results
+                    };
+                    res.render('seller/reviewProduct', product);
+                } else {
+
+                }
+            });
         }
     });
 });
@@ -312,6 +370,12 @@ router.get('/pendingOrders', (req, res) => {
                 productList: results
             };
             res.render('seller/pendingOrders', product);
+        } else {
+            sellerModel.get(req.session.uId, function(result) {
+                if (result.length > 0) {
+                    res.render('seller/index', result[0]);
+                }
+            });
         }
     });
 });
@@ -319,15 +383,29 @@ router.get('/pendingOrders', (req, res) => {
 router.get('/pendingOrders/deliverd/:order_id', (req, res) => {
     productModel.getOrder(req.params.order_id, function(result) {
         if (result.length > 0) {
+            req.session.p_id = result[0].product_id;
+            req.session.quan = result[0].quantity;
             res.render('seller/deliverdProduct', result[0]);
         }
     });
 });
 
 router.post('/pendingOrders/deliverd/:order_id', (req, res) => {
+    var pr = {
+        p_id: req.session.p_id,
+        q_id: req.session.quan
+    };
+
     productModel.updatePendingOrders(req.params.order_id, function(success) {
         if (success) {
-            res.redirect('/seller');
+
+            productModel.updatePendingOrdersQuantity(pr, function(success) {
+                if (success) {
+                    res.redirect('/seller');
+                } else {
+                    res.redirect("/editProduct/delete/" + req.params.product_id);
+                }
+            });
         } else {
             res.redirect("/editProduct/delete/" + req.params.product_id);
         }
@@ -372,6 +450,148 @@ router.get('/deliverdOrders', (req, res) => {
         }
     });
 });
+
+// *todo: deliverd orders enddddddd
+
+
+
+
+
+//*todo: report customer
+
+router.get('/reportCustomer', (req, res) => {
+    productModel.getAllOrders(req.session.uId, function(results) {
+        if (results.length > 0) {
+            var product = {
+                productList: results
+            };
+            res.render('seller/reportCustomer', product);
+        }
+    });
+});
+
+router.get('/reportCustomer/report/:customer_id', (req, res) => {
+    productModel.getCustomer(req.params.customer_id, function(result) {
+        if (result.length > 0) {
+            res.render('seller/reportCustomerDetails', result[0]);
+        }
+    });
+});
+
+
+router.post('/reportCustomer/report/:customer_id', (req, res) => {
+    var rp = {
+        seller: req.session.uId,
+        customer: req.params.customer_id,
+        msg: req.body.report
+    };
+
+
+    sellerModel.getUser3(req.params.customer_id, function(result) {
+        if (result.length > 0) {
+            rp.customer = result[0].user_id;
+
+            productModel.reportCustomer(rp, function(success) {
+                if (success) {
+                    res.redirect('/seller');
+                } else {
+                    res.redirect("/editProduct/delete/" + req.params.product_id);
+                }
+            });
+
+        } else {
+
+            res.redirect('/login');
+        }
+    });
+
+
+
+});
+
+
+//*todo: report customer endddddddddd
+
+
+//*todo: add coupon
+
+router.get('/addCatagory', (req, res) => {
+    res.render('seller/addCatagory');
+});
+
+router.post('/addCatagory', (req, res) => {
+    var coupon = {
+        user_id: req.session.uId,
+        //product_id: 55,
+        coupon_code: req.body.catagory_name
+
+    };
+    productModel.insertCatagory(coupon, function(success) {
+        if (success) {
+            sellerModel.get(req.session.uId, function(result) {
+                if (result.length > 0) {
+                    res.render('seller/index', result[0]);
+                }
+            });
+
+        } else {
+            console.log("***********");
+            console.log(coupon.coupon_code);
+            res.render('seller/addCatagory');
+
+        }
+    });
+});
+
+//*todo: add coupon endddddddddd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

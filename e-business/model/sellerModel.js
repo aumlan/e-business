@@ -3,7 +3,18 @@ var db = require('./db');
 module.exports = {
     get: function(sellerID, callback) {
         var sql = "select * from sellerpi where user_id = ?";
-
+        db.getResult(sql, [sellerID], function(result) {
+            callback(result);
+        });
+    },
+    get2: function(sellerID, callback) {
+        var sql = "select * from sellerpi where seller_id = ?";
+        db.getResult(sql, [sellerID], function(result) {
+            callback(result);
+        });
+    },
+    get3: function(sellerID, callback) {
+        var sql = "select * from customerpi where 	customer_id = ?";
         db.getResult(sql, [sellerID], function(result) {
             callback(result);
         });
@@ -14,10 +25,29 @@ module.exports = {
             callback(result);
         });
     },
+    getUser2: function(uu, callback) {
+        var sql = "select * from sellerpi where seller_id = ?";
+        db.getResult(sql, [uu], function(result) {
+            callback(result);
+        });
+    },
+    getUser3: function(cc, callback) {
+        var sql = "select * from customerpi where customer_id = ?";
+        db.getResult(sql, [cc], function(result) {
+            callback(result);
+        });
+    },
     getAll: function(callback) {
         var sql = "select * from admins";
         db.getResult(sql, [], function(results) {
             callback(results);
+        });
+    },
+    validate: function(user, callback) {
+        var sql = "select * from user where user_id = ? and password = ?";
+
+        db.getResult(sql, [user.userId, user.password], function(result) {
+            callback(result);
         });
     },
     insert: function(admin, callback) {
@@ -30,6 +60,12 @@ module.exports = {
         var sql = "update admins set A_NAME = ?, A_ADDRESS = ?, A_EMAIL = ? where A_ID = ?";
         db.execute(sql, [admin.name, admin.address, admin.email, admin.id], function(status) {
             callback(status);
+        });
+    },
+    getCatagory: function(callback) {
+        var sql = "select * from catagory";
+        db.getResult(sql, [], function(result) {
+            callback(result);
         });
     },
 

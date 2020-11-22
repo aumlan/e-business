@@ -22,10 +22,10 @@
             <div class="p-4 pt-5">
                 <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
                 <ul class="list-unstyled components mb-5">
-                    <li>
+                    <li class="active">
                         <a href="/seller">Profile</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Products</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <li>
@@ -39,6 +39,9 @@
                             </li>
                             <li>
                                 <a href="/seller/addCoupon">Add Coupon</a>
+                            </li>
+                            <li>
+                                <a href="/seller/addCatagory">Add Catagory</a>
                             </li>
                         </ul>
                     </li>
@@ -62,19 +65,33 @@
                                 <a href="/seller/reviewProduct">Review</a>
                             </li>
                             <li>
-                                <a href="#">Sells Analysis</a>
+                                <a href="/seller/totalIncome">Sells Analysis</a>
                             </li>
                             <li>
-                                <a href="#">Report Customer</a>
+                                <a href="/seller/reportCustomer">Report Customer</a>
                             </li>
 
                         </ul>
                     </li>
+
                     <li>
-                        <a href="#">Orders</a>
+                        <a href="#nooSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Orders</a>
+                        <ul class="collapse list-unstyled" id="nooSubmenu">
+                            <li>
+                                <a href="/seller/pendingOrders">Pending Orders</a>
+                            </li>
+                            <li>
+                                <a href="/seller/deliverdOrders">Deliverd Orders</a>
+                            </li>
+
+
+                        </ul>
                     </li>
                     <li>
                         <a href="#">Payment</a>
+                    </li>
+                    <li>
+                        <a href="/logout">LogOut</a>
                     </li>
                 </ul>
 

@@ -22,7 +22,7 @@
             <div class="p-4 pt-5">
                 <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
                 <ul class="list-unstyled components mb-5">
-                    <li>
+                    <li class="active">
                         <a href="/seller">Profile</a>
                     </li>
                     <li>
@@ -40,6 +40,9 @@
                             <li>
                                 <a href="/seller/addCoupon">Add Coupon</a>
                             </li>
+                            <li>
+                                <a href="/seller/addCatagory">Add Catagory</a>
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -55,26 +58,40 @@
 
                         </ul>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Sells</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
                             <li>
                                 <a href="/seller/reviewProduct">Review</a>
                             </li>
                             <li>
-                                <a href="#">Sells Analysis</a>
+                                <a href="/seller/totalIncome">Sells Analysis</a>
                             </li>
                             <li>
-                                <a href="#">Report Customer</a>
+                                <a href="/seller/reportCustomer">Report Customer</a>
                             </li>
 
                         </ul>
                     </li>
+
                     <li>
-                        <a href="#">Orders</a>
+                        <a href="#nooSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Orders</a>
+                        <ul class="collapse list-unstyled" id="nooSubmenu">
+                            <li>
+                                <a href="/seller/pendingOrders">Pending Orders</a>
+                            </li>
+                            <li>
+                                <a href="/seller/deliverdOrders">Deliverd Orders</a>
+                            </li>
+
+
+                        </ul>
                     </li>
                     <li>
                         <a href="#">Payment</a>
+                    </li>
+                    <li>
+                        <a href="/logout">LogOut</a>
                     </li>
                 </ul>
 
@@ -96,7 +113,7 @@
         <div id="content" class="p-4 p-md-5">
             <div align="center">
                 <span align="center">
-                    <h3>All Products Edit</h3>
+                    <h3>Product Review</h3>
                 </span>
                 <table border="1px" width="80%">
                     <tr>

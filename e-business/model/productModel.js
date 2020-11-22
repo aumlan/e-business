@@ -9,7 +9,7 @@ module.exports = {
     },
 
     getAll: function(seller_id, callback) {
-        var sql = "select * from product where seller_id = ?";
+        var sql = "select * from product where user_id = ?";
         db.getResult(sql, [seller_id], function(results) {
             callback(results);
         });
@@ -33,13 +33,13 @@ module.exports = {
         });
     },*/
     insert2: function(product, callback) {
-        var sql = "insert into product values (Null,?, ?,?, ?,Null, ?,?, ?,?,?  )";
+        var sql = "INSERT INTO product SET user_id=?, product_name=?, quantity=?, price=?, catagory_id =( SELECT catagory_id FROM catagory WHERE 	catagory_name = ? ), product_img =?, average_rating=?, description=?, published=?, exclusive=? ";
         db.execute(sql, [ //product.product_id,
-            product.seller_id,
+            product.user_id,
             product.product_name,
             product.quantity,
             product.price,
-            //product.catatgoryID,
+            product.catatgoryID,
             product.image,
             product.average_rating,
             product.description,
@@ -56,8 +56,8 @@ module.exports = {
         });
     },
     update: function(product, callback) {
-        var sql = "update product set product_name = ?, quantity = ?, price = ?, description = ?, published  = ?,exclusive  = ? where product_id = ?";
-        db.execute(sql, [product.product_name, product.quantity, product.price, product.description, product.published, product.exclusive, product.product_id], function(status) {
+        var sql = "update product set product_name = ?, quantity = ?, price = ?,product_img =?, description = ?, exclusive  = true where product_id = ?";
+        db.execute(sql, [product.product_name, product.quantity, product.price, product.image, product.description, product.product_id], function(status) {
             callback(status);
         });
     },
@@ -84,7 +84,7 @@ module.exports = {
     },
 
     getAllUnpublished: function(seller_id, callback) {
-        var sql = "select * from product where seller_id = ? and published = '0' ";
+        var sql = "select * from product where user_id = ? and published = '0' ";
         db.getResult(sql, [seller_id], function(results) {
             callback(results);
         });
@@ -97,7 +97,7 @@ module.exports = {
     },
 
     getAllpublished: function(seller_id, callback) {
-        var sql = "select * from product where seller_id = ? and published = '1' ";
+        var sql = "select * from product where user_id = ? and published = '1' ";
         db.getResult(sql, [seller_id], function(results) {
             callback(results);
         });
@@ -132,13 +132,49 @@ module.exports = {
             callback(status);
         });
     },
+    updatePendingOrdersQuantity: function(pr, callback) {
+        var sql = "update product set quantity = quantity - ? where product_id = ?";
+        db.execute(sql, [pr.q_id, pr.p_id], function(status) {
+            callback(status);
+        });
+    },
     cancelOrders: function(order_id, callback) {
         var sql = "update orderlist set order_status = 'cancel' where order_id = ?";
         db.execute(sql, [order_id], function(status) {
             callback(status);
         });
     },
-
+    getIncome: function(product_id, callback) {
+        var sql = "select * from orderlist where product_id = ? AND  order_status='deliverd' AND  paid= true ";
+        db.getResult(sql, [product_id], function(result) {
+            callback(result);
+        });
+    },
+    getAllOrders: function(seller_id, callback) {
+        var sql = "select * from orderlist where user_id = ?";
+        db.getResult(sql, [seller_id], function(results) {
+            callback(results);
+        });
+    },
+    getCustomer: function(customer_id, callback) {
+        var sql = "select * from customerpi where customer_id = ?";
+        db.getResult(sql, [customer_id], function(results) {
+            callback(results);
+        });
+    },
+    reportCustomer: function(rp, callback) {
+        //var sql = "insert into coupon values (Null,?, ?)";
+        var sql = " INSERT INTO report SET fromuser =( SELECT user_id FROM user WHERE user_id = ? ), touser = ( SELECT user_id FROM user WHERE user_id = ? ), report_msg = ? ";
+        db.execute(sql, [rp.seller, rp.customer, rp.msg], function(status) {
+            callback(status);
+        });
+    },
+    insertCatagory: function(coupon, callback) {
+        var sql = "insert into catagory values (NULL, ?) ";
+        db.execute(sql, [coupon.coupon_code], function(status) {
+            callback(status);
+        });
+    },
 
 
 }

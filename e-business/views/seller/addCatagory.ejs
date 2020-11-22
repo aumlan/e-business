@@ -101,7 +101,7 @@
                         Copyright &copy;
                         <script>
                             document.write(new Date().getFullYear());
-                        </script> All rights reserved <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Auml@n</a>
+                        </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </p>
                 </div>
@@ -111,44 +111,30 @@
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
+            <div align="center">
+                <form method="POST" enctype="multipart/form-data">
+                    <span align="center">
+                        <h3>Add Catagory</h3>
+                    </span>
+                    <table width="50%" align="center" style="border-collapse: separate;border-spacing: 0 8px">
+                        <tr>
+                            <td width="45%">Catagory Name</td>
+                            <td width="10%">:</td>
+                            <td width="45%">
+                                <input type="text" name="catagory_name">
+                            </td>
+                        </tr>
 
-            <div align="center " width="100% ">
-                <table align="center " width="100% ">
-                    <tr>
-                        <td width="30% " colspan="5 ">
-                            <img align="right " src="<%=profile_pic%>" alt="person " height="200px " width="200px " />
-                        </td>
-                    </tr><br><br>
-                    <tr>
-                        <td width="30% ">User ID</td>
-                        <td width="10% ">:</td>
-                        <td width="30% ">
-                            <%=user_id%>
-                        </td>
 
-                    </tr>
-                    <tr>
-                        <td>Name</td>
-                        <td>:</td>
-                        <td>
-                            <%=name%>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Email</td>
-                        <td>:</td>
-                        <td>
-                            <%=email%>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Address</td>
-                        <td>:</td>
-                        <td>
-                            <%=address%>
-                        </td>
-                    </tr>
-                </table>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input type="submit" name="add" value="Add" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
             </div>
         </div>
 
